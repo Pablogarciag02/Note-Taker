@@ -47,10 +47,10 @@ app.post("/api/notes", (req, res) => {
 
   notesList.push(newNote); //pushes the newNote into the notesList object
 
-  fs.writeFile("./db/db.json", JSON.stringify(notesList)); //writes in the file as a json.stringify
+  fs.writeFile("./db/db.json", JSON.stringify(notesList), //writes in the file as a json.stringify
   (err)=>{
     if(err) throw err;
-  };
+  });
    res.json(notesList)
 });
 
@@ -61,14 +61,15 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id",  (req, res) => {
   let idSelected = JSON.parse(req.params.id);//selects the id that the user clicked on
 
-  notesList = notesList.filter((e) => {
+  notesList = notesList.filter((e) => { //filters out and returns a new array of objects
     return e.id != idSelected;
   });
-  notesList.forEach((val, index) => {
+
+  notesList.forEach((val, index) => { //gives each notelist an id
     val.id = index.toString();
   });
 
-  fs.writeFile("./db/db.json", JSON.stringify(notesList), (err) => {
+  fs.writeFile("./db/db.json", JSON.stringify(notesList), (err) => {//writes new array without the deleted one
     if(err) 
     throw err;
   });
@@ -78,7 +79,7 @@ app.delete("/api/notes/:id",  (req, res) => {
 //APP.DELETE REQUEST ENDS HERE________________________________________________________________
 
 
-
+//allows us to see the server with all our individual requests get, post, del.
 app.listen(PORT, () =>
 console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
