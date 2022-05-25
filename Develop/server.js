@@ -10,7 +10,7 @@ let notesList = JSON.parse(fs.readFileSync("./db/db.json", "utf-8", (err)=> {
   if(err) throw err;
 }));
 
-const PORT = process.env.port || 3001; // Server runs in port 3001
+const port = process.env.PORT || 3001; // Server runs in port 3001
 
 
 app.use(express.json());// makes it so that express gets data in json
@@ -80,6 +80,6 @@ app.delete("/api/notes/:id",  (req, res) => {
 
 
 //allows us to see the server with all our individual requests get, post, del.
-app.listen(PORT, () =>
-console.log(`App listening at http://localhost:${PORT} 🚀`)
+app.listen(port, () =>
+console.log(`App listening at http://localhost:${port} 🚀`)
 );
