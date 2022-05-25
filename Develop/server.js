@@ -2,38 +2,38 @@ const express = require("express");// require express
 const fs = require("fs"); // require filesystem also known as fs (part of node)
 const path = require("path");// require path (part of node)
 
-//calls express so that *app* will work with get, post and delete
+//defining the app variable, so that on every accion we establish that we want express to either get, post or delete.
 const app = express();
 
-//will turn the information within the json file into a javascript object through parsing
-let notesList = JSON.parse(fs.readFileSync("./db/db.json", "utf-8", (err)=> {
+//we are defining a variable objectArray and giving it the value of the content within our json file, we then parse it so that it returns a javascript object. 
+let objectArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8", (err)=> {
   if(err) throw err;
 }));
 
-const port = process.env.PORT || 3001; // Server runs in port 3001
+const port = process.env.PORT || 3001; // Setting a port variable and running it in port 3001
 
 
-app.use(express.json());// makes it so that express gets data in json
-app.use(express.urlencoded({ extended: true }));//The extended option allows to choose between parsing the URL-encoded data with the qs library (when true).
+app.use(express.json());// makes it so that incoming data can be recognized as a JSON object
+app.use(express.urlencoded({ extended: true }));//method that allows express to recognize the incoming data as arrays or strings
 app.use(express.static("public"));//Lets me use the static css file within public folder. This way the user can visualize the notes.html file with stylings
 
 
 
 //APP .GET REQUESTS START HERE__________________________________________________________________
-//Gets the main index.html file and gives it to the user when they open up the server.
+//Gets the main index.html file and returns it to the user when they open the page/app.
 app.get("/", (req, res) => {
     console.log("here")
     res.sendFile(path.join(__dirname + "/public/index.html"))
 })
 
-//adds the /notes when the user clicks get started. 
+//Gets the notes.html file and returns it to the user when the url contains mainpage/notes 
 app.get("/notes", (req, res)  => {
     res.sendFile(path.join(__dirname + "/public/notes.html" ))
 });
 
-//Shows the notes within the json file
+//Returns the notes within the json file
 app.get("/api/notes", (req, res) => {
-  return res.json(notesList);
+  return res.json(objectArray);
 });
 
 //APP.GET REQUESTS ENDS HERE_____________________________________________________________________
@@ -45,13 +45,13 @@ app.post("/api/notes", (req, res) => {
   let newNote = {title: req.body.title, text: req.body.text} //our newNote will contain an array with 2 parameters
   newNote.id = notesList.length.toString(); //converts it to a string
 
-  notesList.push(newNote); //pushes the newNote into the notesList object
+  objectArray.push(newNote); //pushes the newNote into the objectArray 
 
-  fs.writeFile("./db/db.json", JSON.stringify(notesList), //writes in the file as a json.stringify
+  fs.writeFile("./db/db.json", JSON.stringify(objectArray), //writes in the file objectArray as a string within said array
   (err)=>{
     if(err) throw err;
   });
-   res.json(notesList)
+   res.json(objectArray)
 });
 
 //APP.POST REQUESTS END HERE (ONLY 1)___________________________________________________________
@@ -59,17 +59,18 @@ app.post("/api/notes", (req, res) => {
 
 //APP.DELETE REQUEST STARTS HERE________________________________________________________________
 app.delete("/api/notes/:id",  (req, res) => {
-  let idSelected = JSON.parse(req.params.id);//selects the id that the user clicked on
+  let idSelected = JSON.parse(req.params.id);//the selected id will depend on the note that the user clicked on
 
-  notesList = notesList.filter((e) => { //filters out and returns a new array of objects
+  objectArray = objectArray.filter((e) => { //filters out the objectArray and returns it without the id that was selected 
     return e.id != idSelected;
   });
 
-  notesList.forEach((val, index) => { //gives each notelist an id
+  objectArray.forEach((val, index) => { //assigns each string within the array a new id
     val.id = index.toString();
   });
 
-  fs.writeFile("./db/db.json", JSON.stringify(notesList), (err) => {//writes new array without the deleted one
+  //writes on the json file serverside the new values without the selected id that is deleted. and then turns the objectArray into a string so that it displays as one. and we can get the new values without the deleted ones.
+  fs.writeFile("./db/db.json", JSON.stringify(objectArray), (err) => {
     if(err) 
     throw err;
   });
