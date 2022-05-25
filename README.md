@@ -17,8 +17,8 @@ This project uses
 [Nodemon](https://www.npmjs.com/package/nodemon) Dev dependency. Allows me to see the new server every time the file is saved.
 
 
-![Example](example1.jpg)
-![Example2](example2.jpg)
+![Example](Example1.jpg)
+![Example2](Example2.jpg)
 Generate an HTML with the info of each worker.
 
 ## Table of Contents
@@ -30,6 +30,7 @@ Generate an HTML with the info of each worker.
 
 
 ## Installation/usage for user
+### Use the deployed app through this link:
 
 
 
