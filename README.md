@@ -4,7 +4,7 @@
 https://github.com/Pablogarciag02/Note-Taker
 
 ## Heroku link
-[Heroku](https://www.youtube.com/watch?v=eosl0gK0cGM&ab_channel=PabloGarcia)
+[Heroku-Deployed-App](https://note-taker-pablogarciag02.herokuapp.com/)
 ## About this Project
 -Every productive person usually partakes in notetaking
 
@@ -29,10 +29,9 @@ Generate an HTML with the info of each worker.
 -Contribution
 
 
-## Installation/usage for user
 ### Use the deployed app through this link:
-
-
+Deployed-App:
+https://note-taker-pablogarciag02.herokuapp.com/
 
 
 ### Installation for dev
