@@ -6,7 +6,7 @@ const path = require("path");// require path (part of node)
 const app = express();
 
 //we are defining a variable objectArray and giving it the value of the content within our json file, we then parse it so that it returns a javascript object. 
-let objectArray = JSON.parse(fs.readFileSync("./db/db.json", "utf-8", (err)=> {
+let objectArray = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf-8", (err)=> {
   if(err) throw err;
 }));
 
@@ -23,12 +23,12 @@ app.use(express.static("public"));//Lets me use the static css file within publi
 //Gets the main index.html file and returns it to the user when they open the page/app.
 app.get("/", (req, res) => {
     console.log("here")
-    res.sendFile(path.join(__dirname + "/public/index.html"))
+    res.sendFile(path.join(__dirname + "/Develop/public/index.html"))
 })
 
 //Gets the notes.html file and returns it to the user when the url contains mainpage/notes 
 app.get("/notes", (req, res)  => {
-    res.sendFile(path.join(__dirname + "/public/notes.html" ))
+    res.sendFile(path.join(__dirname + "/Develop/public/notes.html" ))
 });
 
 //Returns the notes within the json file
@@ -47,7 +47,7 @@ app.post("/api/notes", (req, res) => {
 
   objectArray.push(newNote); //pushes the newNote into the objectArray 
 
-  fs.writeFile("./db/db.json", JSON.stringify(objectArray), //writes in the file objectArray as a string within said array
+  fs.writeFile("./Develop/db/db.json", JSON.stringify(objectArray), //writes in the file objectArray as a string within said array
   (err)=>{
     if(err) throw err;
   });
@@ -70,7 +70,7 @@ app.delete("/api/notes/:id",  (req, res) => {
   });
 
   //writes on the json file serverside the new values without the selected id that is deleted. and then turns the objectArray into a string so that it displays as one. and we can get the new values without the deleted ones.
-  fs.writeFile("./db/db.json", JSON.stringify(objectArray), (err) => {
+  fs.writeFile("./Develop/db/db.json", JSON.stringify(objectArray), (err) => {
     if(err) 
     throw err;
   });
