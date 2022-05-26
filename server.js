@@ -15,7 +15,7 @@ const port = process.env.PORT || 3001; // Setting a port variable and running it
 
 app.use(express.json());// makes it so that incoming data can be recognized as a JSON object
 app.use(express.urlencoded({ extended: true }));//method that allows express to recognize the incoming data as arrays or strings
-app.use(express.static("public"));//Lets me use the static css file within public folder. This way the user can visualize the notes.html file with stylings
+app.use(express.static("Develop/public"));//Lets me use the static css file within public folder. This way the user can visualize the notes.html file with stylings
 
 
 
@@ -43,7 +43,7 @@ app.get("/api/notes", (req, res) => {
 //adds notes into the json file within the server
 app.post("/api/notes", (req, res) => {
   let newNote = {title: req.body.title, text: req.body.text} //our newNote will contain an array with 2 parameters
-  newNote.id = notesList.length.toString(); //converts it to a string
+  newNote.id = objectArray.length.toString(); //converts it to a string
 
   objectArray.push(newNote); //pushes the newNote into the objectArray 
 
